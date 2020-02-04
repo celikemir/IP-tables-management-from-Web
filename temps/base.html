@@ -1,0 +1,48 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block pagetitle %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <ul class="navbar-nav">
+    <li class="nav-item">
+        <a class="nav-link" href="/">FWALL</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/">Homepage</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/d/add-rule/">Add Rule</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/d/rules/">Rule List</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/documents/">Documents</a>
+    </li>
+  </ul>
+</nav>
+    <!-- Body Content -->
+
+    {% block body %}{% endblock %}
+
+    <!-- Body Content # -->
+
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('button[data-toggle=popover]').each(function () {
+                $(this).popover({trigger:'focus'});
+            })
+        })
+    </script>
+    {% block extraFooter %}{% endblock %}
+</body>
+</html>

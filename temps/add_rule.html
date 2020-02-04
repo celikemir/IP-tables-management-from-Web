@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% block pagetitle %}Add Rule{% endblock %}
+{% load static %}
+
+{% block body %}
+    <div class="bg" style="height: 550px;">
+        <div class="container">
+            <div class="row">
+                <div class="col col-lg-3" style="margin-top: 150px; margin-left: 200px;">
+                    <form method="post" action="">{% csrf_token %}
+                        <div class="form-group">
+                            {{ form.chain }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.protocol }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.destination_port }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.source_port }}
+                            {% if form.source_port.errors %}
+                                <div class="alert alert-danger">{{ form.source_port.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form.destination_ip }}
+                            {% if form.destination_ip.errors %}
+                                <div class="alert alert-danger">{{ form.destination_ip.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form.source_ip }}
+                            {% if form.source_ip.errors %}
+                                <div class="alert alert-danger">{{ form.source_ip.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form.operation }}
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success">Insert</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col col-lg-5" style="margin-top: 150px;">
+                    <div class="form-group">
+                            {{ service_form.source_service }}
+                    </div>
+                    <div class="form-group">
+                            {{ service_form.destination_service }}
+                    </div>
+                    <div class="checkbox-row">
+                        <div class="block">
+                            <span>Destination Port</span>
+                            <input data-index="1" id="destination_port" type="checkbox" />
+                            <label for="destination_port"></label>
+                        </div>
+                    </div>
+
+                    <div class="checkbox-row">
+                        <div class="block">
+                            <span>Source Port</span>
+                            <input data-index="1" id="source_port" type="checkbox" />
+                            <label for="source_port"></label>
+                        </div>
+                    </div>
+
+                    <div class="checkbox-row">
+                        <div class="block">
+                            <span>Destination IP</span>
+                            <input data-index="1" id="destination_ip" type="checkbox" />
+                            <label for="destination_ip"></label>
+                        </div>
+                    </div>
+
+                    <div class="checkbox-row">
+                        <div class="block">
+                            <span>Source IP</span>
+                            <input data-index="1" id="source_ip" type="checkbox" />
+                            <label for="source_ip"></label>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block extraFooter %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('input[type=checkbox]').each(function () {
+                var obj = $(this);
+                obj.click(function () {
+                    if(obj[0].checked){
+                        var id = obj[0].getAttribute("id");
+                        $('#id_'+id).css("display", "block");
+                    }else{
+                        var id = obj[0].getAttribute("id");
+                        $('#id_'+id).css("display", "none").val("");
+                    }
+                })
+            });
+            $('input[type=text]').each(function () {
+                $(this).val("");
+            });
+
+            $('#id_source_service').change(function () {
+                if($("#id_source_service option:checked").val() != ""){
+                    var val = $("#id_source_service option:checked").text().split(":")[1];
+                    $('#source_port').prop('checked', true);
+                    $('#id_source_port').css("display", "block").val(val);
+                }else{
+                    $('#source_port').prop('checked', false);
+                    $('#id_source_port').css("display", "none").val("");
+                }
+            });
+
+            $('#id_destination_service').change(function () {
+                if($("#id_destination_service option:checked").val() != ""){
+                    var val = $("#id_destination_service option:checked").text().split(":")[1];
+                    $('#destination_port').prop('checked', true);
+                    $('#id_destination_port').css("display", "block").val(val);
+                }else{
+                    $('#destination_port').prop('checked', false);
+                    $('#id_destination_port').css("display", "none").val("");
+                }
+
+            });
+
+
+        });
+    </script>
+{% endblock %}

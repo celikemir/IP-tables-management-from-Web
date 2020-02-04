@@ -1,0 +1,7 @@
+.idea/
+*.pyc
+local.py
+*.sqlite3
+statics/static_root/*
+__pycache__
+.DS_Store

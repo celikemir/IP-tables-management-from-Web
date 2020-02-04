@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+{% block pagetitle %}Documents{% endblock %}
+{% load static %}
+
+{% block body %}
+    <div style="background-color: #b9bbbe;">
+
+
+            <h2 style="background-color: rgba(49,0,28,0.27);">What is the FWALL? </h2>
+            <table class="table" style="margin-left: 0px;">
+                <tr>
+                    <td>
+                        <b>Iptables:</b>
+                    </td>
+                    <td>
+                        It is the default, command-based security firewall for the Linux operating system.It talks to Linux kernel and determines packet filtering rules.
+                        This firewall can block traffic passing through the ports that the services are running, it can route to another port.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Fwall:</b>
+                    </td>
+                    <td>
+                        Fwall is a web interface for iptables.
+                    </td>
+                </tr>
+            </table>
+            <h2 style="background-color: rgba(49,0,28,0.27);">How to use FWALL? </h2>
+            <table class="table" style="margin-left: 0px;">
+                <thead>
+                    <tr>There are three types of chain, input, forward and output.</tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <b>Input:</b>
+                        </td>
+                        <td>
+                            This chain is used to control the behavior to be determined according to incoming connections.
+                            For example, if a user tries to connect with SSH to your computer or server,
+                            it tries to match the IP address and port number according to the rules in the iptables input chain.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>Output:</b>
+                        </td>
+                        <td>
+                            This chain is used for outbound links.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>Forward:</b>
+                        </td>
+                        <td>
+                            This chain is used to configure incoming connections that will not be delivered to local devices.
+                            For example, if you try to ping google.com.
+                            Iptables; it will check the output chain to make a decision to reject or accept the connection to and google.com.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <img  src="{% static 'img/documentsRule.png' %} " class="center"/>
+            <table class="table table-hover" style="margin-left: 0px;">
+                <tr>
+                    <td>
+                        <h1>1</h1>
+                    </td>
+                    <td>
+                        <img  src="{% static 'img/1.png' %} "/>
+                    </td>
+                    <td>
+                        <b>INPUT:</b>This chain is used to control the behavior to be determined according to incoming connections.<br>
+                        <b>OUTPUT:</b>This chain is used for outbound links.<br>
+                        <b>FORWARD:</b>This chain is used to configure incoming connections that will not be delivered to local devices.
+                    </td>
+                </tr>
+                 <tr>
+                    <td>
+                        <h1>2</h1>
+                    </td>
+                    <td>
+                        <img  src="{% static 'img/2.png' %} "/>
+                    </td>
+                    <td>
+                        Types of traffic.
+                    </td>
+                </tr>
+                 <tr>
+                    <td>
+                        <h1>3</h1>
+                    </td>
+                    <td>
+                        <img  src="{% static 'img/3.png' %} "/>
+                    </td>
+                    <td>
+                        <b>ACCEPT:</b>Passage of packets is allowed.<br>
+                        <b>DROP:</b>Passing of packages is not allowed.<br>
+                        <b>REJECT:</b>Access to the packages is denied and the sender is informed.
+                    </td>
+                </tr>
+                 <tr>
+                    <td>
+                        <h1>4</h1>
+                    </td>
+                    <td>
+                        <img  src="{% static 'img/4.png' %} "/>
+                    </td>
+                    <td>
+                        Port information for some special services.<br>
+                        Whenever one is selected, it is taken as an automatic source port.
+                    </td>
+                </tr>
+                 <tr>
+                    <td>
+                        <h1>5</h1>
+                    </td>
+                    <td>
+                        <img  src="{% static 'img/5.png' %} "/>
+                    </td>
+                    <td>
+                        Port information for some special services.<br>
+                        Whenever one is selected, it is taken as an automatic destination port.
+                    </td>
+                </tr>
+                 <tr>
+                    <td>
+                        <h1>6</h1>
+                    </td>
+                    <td>
+                        <img  src="{% static 'img/6.png' %} "/>
+                    </td>
+                    <td>
+                        When these checkboxes are activated,<br>
+                        input fields are opened and port or ip information is requested.
+                    </td>
+                </tr>
+                 <tr>
+                    <td>
+                        <h1>7</h1>
+                    </td>
+                    <td>
+                        <img  src="{% static 'img/7.png' %} "/>
+                    </td>
+                    <td>
+                        When the button is clicked, the rule is saved and listed in the rules table.
+                    </td>
+                </tr>
+            </table>
+            <h2 style="background-color: rgba(49,0,28,0.27);">How to run rules? </h2>
+            <img  src="{% static 'img/ruleList.png' %}" class="center" style="width: 1100px;"/>
+            <h2 style="background-color: rgba(49,0,28,0.27);">Examples </h2>
+            <table class="table table-hover" style="margin-left: 0px;">
+                <tr>
+                    <td>
+                        <img  src="{% static 'img/BlockPing.png' %} "style="width: 900px;"/>
+                    </td>
+                    <td>
+
+                        <b>This rule prevents ping from a certain ip.</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img  src="{% static 'img/blockallping.png' %} "style="width: 900px;"/>
+                    </td>
+                    <td>
+
+                        <b>This rule prevents all incoming pings.</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img  src="{% static 'img/BlockHttps.png' %} "style="width: 900px;"/>
+                    </td>
+                    <td>
+
+                        <b>It rejects all outbound https packets.</b>
+                    </td>
+                </tr>
+            </table>
+    </div>
+
+{% endblock %}
+{% block extraFooter %}
+{% endblock %}
+
+

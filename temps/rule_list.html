@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block pagetitle %}Rule List{% endblock %}
+
+{% block body %}
+    <div class="bg">
+        <div class="container">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Rule ID</th>
+                        <th>Chain</th>
+                        <th>Protocol</th>
+                        <th>Source Port</th>
+                        <th>Destination Port</th>
+                        <th>Source IP</th>
+                        <th>Destination IP</th>
+                        <th>Operation</th>
+                        <th>Command</th>
+                        <th>Active</th>
+                        <th>Timestamp</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for rule in rules %}
+                    <tr>
+                        <td>{{ rule.id }}</td>
+                        <td>{{ rule.chain }}</td>
+                        <td>{{ rule.protocol }}</td>
+                        <td>{{ rule.source_port }}</td>
+                        <td>{{ rule.destination_port }}</td>
+                        <td>{{ rule.source_ip }}</td>
+                        <td>{{ rule.destination_ip }}</td>
+                        <td>{{ rule.operation }}</td>
+                        <td>
+                            <button data-toggle="popover" data-trigger="focus" data-content="{{ rule.command }}" data-placement="bottom" class="btn btn-info" type="button">Command</button>
+                        </td>
+                        <td>
+                            <div class="block">
+                                <input data-index="{{ forloop.counter }}" data-content="{{ rule.id }}" id="quality{{ forloop.counter }}" type="checkbox" {% if rule.is_run %}checked{% endif %} />
+                                <label for="quality{{ forloop.counter }}"></label>
+                            </div>
+                        </td>
+                        <td>{{ rule.timestamp }}</td>
+                        <td>
+                            <form method="post" action="">{% csrf_token %}
+                                <input type="hidden" value="{{ rule.id }}" name="rule_id">
+                                <button class="btn btn-danger" type="submit">Delete</button>
+                            </form>
+
+
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
+{% block extraFooter %}
+    <script>
+        $('input[type=checkbox]').each(function () {
+            $(this).change(function () {
+                var obj = $(this);
+                if(this.checked){
+                    var action = 'start';
+                }else{
+                    var action = 'stop';
+                }
+                $.ajax({
+                    type: "POST",
+                    url: '/api/rule-control/',
+                    data: {
+                        "rule_id": $(this).data('content'),
+                        "action": action,
+                        "csrfmiddlewaretoken": "{{ csrf_token }}",
+                    },
+                    dataType: "json",
+                    success: function (result){
+                        if(action == "stop"){
+                            obj[0].checked = false;
+                        }else{
+                            obj[0].checked = true;
+                        }
+                    },
+                    error: function (result) {
+                        if(action == "stop"){
+                            obj[0].checked = true;
+                        }else{
+                            obj[0].checked = false;
+                        }
+                    }
+                })
+
+            })
+        })
+    </script>
+{% endblock %}
+
+
