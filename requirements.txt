@@ -1,6 +1,6 @@
 backports.shutil-get-terminal-size==1.0.0
 decorator==4.2.1
-Django==1.11.24
+Django==1.11.29
 django-scss==0.6.1
 django-static-precompiler==1.8.2
 djangorestframework==3.8.2
